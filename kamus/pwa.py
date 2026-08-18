@@ -205,8 +205,12 @@ def emit(repo, *, name, short, desc, lang, pages, shortcuts=(), accent=ACCENT):
     """
     written = icons(os.path.join(repo, "icons"), accent)
 
+    # Sin "id" a propósito. El id se resuelve contra el ORIGEN, no contra la ruta
+    # del sitio, así que un "./" daría la misma identidad (usuario.github.io) a
+    # todos los idiomas y el navegador ofrecería sustituir una app por otra al
+    # instalar la segunda. Omitido, la identidad pasa a ser el start_url, que sí
+    # es único: usuario.github.io/kamus-<lengua>/.
     manifest = {
-        "id": "./",
         "name": name,
         "short_name": short,
         "description": desc,
@@ -232,10 +236,14 @@ def emit(repo, *, name, short, desc, lang, pages, shortcuts=(), accent=ACCENT):
     for p in pages:
         inject(os.path.join(repo, p), head)
 
-    assets = ["./"] + ["./" + p for p in pages] + ["./manifest.webmanifest"] \
-        + ["./icons/" + n for n in ICONS if n != "apple-touch-icon.png"]
+    # La versión cubre TODO lo precacheado, no solo las páginas: si cambia el
+    # manifest y el sw.js se queda igual, el service worker nunca se reinstala y
+    # sigue sirviendo de su cache la versión vieja para siempre.
+    files = list(pages) + ["manifest.webmanifest"] \
+        + ["icons/" + n for n in ICONS if n != "apple-touch-icon.png"]
+    assets = ["./"] + ["./" + f for f in files]
     open(os.path.join(repo, "sw.js"), "w", encoding="utf-8").write(
-        SW.format(version=_version([os.path.join(repo, p) for p in pages]),
+        SW.format(version=_version([os.path.join(repo, f) for f in files]),
                   assets=json.dumps(assets, indent=2)))
 
     return written + ["manifest.webmanifest", "sw.js"]
