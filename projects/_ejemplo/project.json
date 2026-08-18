@@ -1,0 +1,50 @@
+{
+  "_comentario": [
+    "Plantilla para un idioma nuevo. Copia esta carpeta a projects/<iso>/ y edita.",
+    "Averigua los valores con:  python -m kamus detect  (lee los Settings.xml).",
+    "Luego:  python -m kamus check <iso>  te dice qué niveles A/B/C son posibles."
+  ],
+
+  "id": "xxx",
+
+  "translation_dir": "C:\\ruta\\al\\proyecto\\Paratext",
+  "backtranslation_dir": "C:\\ruta\\al\\proyecto\\Paratext\\RetroTrad",
+
+  "language": {
+    "name": "Nombre de la lengua",
+    "alt": "",
+    "iso": "xxx",
+    "region": "región, provincia"
+  },
+
+  "gloss_language": {
+    "_nota": "map = fichero de glosses/ (lema griego/hebreo -> esta lengua). gloss_id.py ya existe para indonesio.",
+    "name": "Bahasa Indonesia",
+    "iso": "id",
+    "map": "gloss_id"
+  },
+
+  "sources": {
+    "_nota": "Rutas relativas a translation_dir. Quita las que el proyecto no tenga; glossary se autodetecta si se omite.",
+    "lexicon": "Lexicon.xml",
+    "renderings": "TermRenderings.xml",
+    "glossary": ""
+  },
+
+  "interlinear": {
+    "_nota": "Sufijos de la lengua vernácula que el interlineal prueba a quitar para hallar la raíz. Opcional pero mejora mucho la cobertura.",
+    "source_suffixes": []
+  },
+
+  "output": {
+    "_nota": "Si se omiten, se generan desde los nombres de las lenguas.",
+    "basename": "",
+    "interlinear": ""
+  },
+
+  "publish": {
+    "dir": "C:\\ruta\\al\\repo-web-de-esta-lengua",
+    "repo": "usuario/kamus-xxx",
+    "public": true
+  }
+}

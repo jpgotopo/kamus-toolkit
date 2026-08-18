@@ -1,0 +1,14 @@
+# Cachés de Python
+__pycache__/
+*.py[cod]
+
+# Intermedios del alineamiento: bitexto, IBM Model 1, dumps. Se rehacen con
+# `python -m kamus align <iso>` y pesan más que todo el código junto.
+projects/*/work/
+
+# Salidas: md / tsv / xlsx / html + interlineal. Las genera `build` y lo que se
+# publica ya vive en el repo web de cada idioma.
+projects/*/out/
+
+# Ajustes locales de Claude Code (permisos de esta máquina)
+.claude/settings.local.json

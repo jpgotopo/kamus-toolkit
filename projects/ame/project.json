@@ -1,0 +1,55 @@
+{
+  "id": "ame",
+
+  "translation_dir": "C:\\Users\\Jean Paul\\Documents\\Yanesha",
+  "backtranslation_dir": "C:\\Users\\Jean Paul\\Documents\\Yanesha\\YaneshaR",
+
+  "language": {
+    "name": "Yanesha'",
+    "alt": "Amuesha",
+    "iso": "ame",
+    "region": "selva central del Perú, Pasco y Junín"
+  },
+
+  "gloss_language": {
+    "name": "español",
+    "iso": "es",
+    "map": "gloss_es"
+  },
+
+  "sources": {
+    "lexicon": "Lexicon.xml",
+    "renderings": "TermRenderings.xml",
+    "glossary": ""
+  },
+
+  "_morfologia_nota": [
+    "source_suffixes y morphology.json salen de WordAnalyses.xml, la segmentación",
+    "que el propio equipo hizo en Paratext. No editar a mano: regenerar con",
+    "    python tools/gen_morphology.py ame",
+    "Van de más largo a más corto porque el interlineal se queda con el primer",
+    "sufijo que casa, y '-o' se comería a '-eño'."
+  ],
+  "interlinear": {
+    "source_prefixes": ["pue", "p̃á", "pe", "ne", "pó", "po", "pá", "se", "na", "pa", "ye", "no", "ná", "né", "p̃", "p", "n", "s", "y", "a", "á"],
+    "source_suffixes": ["ec̈hno", "oc̈hno", "neshá", "t̃oll", "nesho", "esho", "eshá", "esha", "ñapa", "et̃", "ot̃", "err", "ach", "chá", "hua", "cop", "ách", "aré", "ena", "ep̃", "huá", "mar", "tet", "érr", "ét̃", "et", "en", "ña", "pá", "er", "an", "t̃", "eñ", "pa", "ar", "ch", "án", "ét", "o", "a", "e", "á", "n", "é", "ó"]
+  },
+
+  "_ui_nota": "El apéndice morfológico es material del equipo pendiente de su revisión: el léxico agrupa homófonos, así que un afijo puede salir con funciones que son morfemas distintos.",
+  "ui": {
+    "js": {
+      "morf_note": "Afijos que el propio equipo segmentó en Paratext (WordAnalyses.xml), con la función que le dio a cada uno en el léxico. <b>Material de consulta pendiente de revisión:</b> el léxico agrupa las formas homófonas, así que un mismo afijo puede aparecer con funciones que en realidad son morfemas distintos."
+    }
+  },
+
+  "output": {
+    "basename": "Diccionario-Yanesha-Espanol",
+    "interlinear": "Interlineal-Yanesha-Espanol"
+  },
+
+  "publish": {
+    "dir": "C:\\Users\\Jean Paul\\Documents\\kamus-yanesha-web",
+    "repo": "jpgotopo/kamus-yanesha",
+    "public": true
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "tom",
+
+  "translation_dir": "C:\\Users\\Jean Paul\\Documents\\TombuluAssets",
+  "backtranslation_dir": "C:\\Users\\Jean Paul\\Documents\\TombuluAssets\\TBL",
+
+  "language": {
+    "name": "Tombulu",
+    "alt": "bahasa Tombulu",
+    "iso": "tom",
+    "region": "bahasa Minahasa, Sulawesi Utara"
+  },
+
+  "gloss_language": {
+    "name": "Bahasa Indonesia",
+    "iso": "id",
+    "map": "gloss_id"
+  },
+
+  "sources": {
+    "lexicon": "Lexicon.xml",
+    "renderings": "TermRenderings.xml",
+    "glossary": ""
+  },
+
+  "interlinear": {
+    "_nota": [
+      "Derivados de WordAnalyses.xml (156 palabras segmentadas a mano por el equipo)",
+      "con tools/gen_morphology.py. Se quitó -' , que sale de una segmentación mala",
+      "(zéi'kanpé' = zéi'kanpé-') y no resuelve ni una forma; los demás se midieron",
+      "sobre el texto y todos aportan. Cobertura medida: 1831 de 9400 tipos sin",
+      "entrada (19.5%), 4837 tokens. Más largos primero: el interlineal se queda",
+      "con la primera raíz que casa."
+    ],
+    "source_prefixes": ["ni"],
+    "source_suffixes": ["pé'", "mé", "mo", "ma", "la", "na", "ku", "ta", "an", "en", "é", "a", "o"]
+  },
+
+  "output": {
+    "basename": "Kamus-Tombulu-Indonesia",
+    "interlinear": "Interlinear-Tombulu-Indonesia"
+  },
+
+  "publish": {
+    "dir": "C:\\Users\\Jean Paul\\Documents\\kamus-tombulu-web",
+    "repo": "jpgotopo/kamus-tombulu",
+    "public": true
+  }
+}

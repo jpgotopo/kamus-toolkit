@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="__GLOSS_ISO__">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<style>
+  :root{--bg:#f6f7f9;--card:#fff;--ink:#1c2530;--muted:#6b7887;--line:#e3e8ee;--accent:#1f4e79;
+    --tok:#eef2f7;--src:#12324f;--unk:#b3261e;--unkbg:#fdecea;--sel:#1f4e79;--cust:#7a4bd0;--custbg:#efe8fb;--shadow:0 1px 3px rgba(0,0,0,.06);}
+  @media (prefers-color-scheme:dark){:root{--bg:#0f141a;--card:#171e26;--ink:#e6ebf1;--muted:#93a1b0;--line:#25303b;
+    --accent:#6aa9e0;--tok:#1e2732;--src:#bcd6f0;--unk:#f0857c;--unkbg:#2a1512;--sel:#6aa9e0;--cust:#b79bec;--custbg:#241633;--shadow:0 1px 3px rgba(0,0,0,.4);}}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  .wrap{max-width:1000px;margin:0 auto;padding:16px}
+  h1{font-size:19px;margin:6px 0 2px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+  .dir{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .seg button{border:0;background:var(--card);color:var(--ink);padding:8px 14px;font-size:13.5px;cursor:pointer}
+  .seg button.active{background:var(--accent);color:#fff}
+  .swap{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:13.5px}
+  textarea{width:100%;min-height:100px;padding:12px;font-size:15px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);resize:vertical}
+  .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
+  .btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:13.5px}
+  .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .btn.mini{padding:4px 9px;font-size:12px;border-radius:7px}
+  .btn:active{transform:translateY(1px)}
+  .hint{color:var(--muted);font-size:12.5px}
+  .out{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--shadow);min-height:60px}
+  .il{display:flex;flex-wrap:wrap;gap:8px 9px}
+  .tok{position:relative;display:flex;flex-direction:column;align-items:flex-start;background:var(--tok);border:1px solid var(--line);border-radius:8px;padding:5px 8px 4px}
+  .tok.phrase{border-color:var(--sel);border-style:solid;background:linear-gradient(0deg,var(--tok),var(--tok))}
+  .tok.cust{border-color:var(--cust);background:var(--custbg)}
+  .tok .s{font-weight:700;color:var(--src);font-size:14.5px}
+  .tok .g{font-size:13px;color:var(--ink);margin-top:1px}
+  .gsel{font:inherit;font-size:13px;color:var(--ink);background:transparent;border:0;border-bottom:1px dotted var(--sel);
+    padding:0 15px 0 0;margin-top:1px;cursor:pointer;max-width:200px;-webkit-appearance:none;appearance:none;
+    background-image:linear-gradient(45deg,transparent 50%,var(--sel) 50%),linear-gradient(135deg,var(--sel) 50%,transparent 50%);
+    background-position:right 4px top 7px,right 0 top 7px;background-size:5px 5px,5px 5px;background-repeat:no-repeat;}
+  .gsel:focus{outline:none;border-bottom-color:var(--accent)}
+  .gsel option{color:#000}
+  .gedit{font:inherit;font-size:13px;margin-top:1px;border:1px solid var(--cust);border-radius:5px;padding:1px 5px;min-width:90px;background:var(--card);color:var(--ink)}
+  .tok.unk{background:var(--unkbg);border-color:var(--unk)}
+  .tok.unk .g{color:var(--unk)}
+  .ctl{display:flex;gap:2px;margin-top:3px}
+  .ctl button{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:5px;width:20px;height:18px;
+    line-height:1;font-size:11px;padding:0;cursor:pointer}
+  .ctl button:hover{color:var(--accent);border-color:var(--accent)}
+  .punc{align-self:center;color:var(--muted);font-weight:700;padding:0 1px}
+  .translation{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+  .trhead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .translation .lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+  .translation .txt{font-size:16px;margin-top:5px}
+  .stat{color:var(--muted);font-size:12.5px;margin-top:8px}
+  .legend{color:var(--muted);font-size:12px;margin-top:8px;line-height:1.7}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:9px 16px;border-radius:8px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+  .toast.show{opacity:1}
+  .xlink{display:inline-block;margin:0 0 14px;padding:6px 12px;border:1px solid var(--accent);border-radius:999px;
+    color:var(--accent);text-decoration:none;font-size:13px;font-weight:600}
+  .xlink:hover{background:var(--accent);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>__TITLE__</h1>
+  <p class="sub">__SUB__</p>
+  <a class="xlink" href="__KAMUS_FILE__">__LINK_KAMUS__</a>
+
+  <div class="dir">
+    <div class="seg" id="seg">
+      <button data-d="t2i" class="active">__DIR_T2I__</button>
+      <button data-d="i2t">__DIR_I2T__</button>
+    </div>
+    <button class="swap" id="swap">⇄</button>
+  </div>
+
+  <textarea id="in"></textarea>
+
+  <div class="bar">
+    <button class="btn primary" id="copyT"></button>
+    <button class="btn" id="copyIL"></button>
+    <button class="btn" id="clear"></button>
+    <span class="hint" id="hint"></span>
+  </div>
+
+  <div class="out">
+    <div class="il" id="il"></div>
+    <div class="translation" id="tr" style="display:none">
+      <div class="trhead"><span class="lbl" id="trlbl"></span>
+        <button class="btn mini" id="copyT2">📋</button></div>
+      <div class="txt" id="trtxt"></div>
+    </div>
+    <div class="stat" id="stat"></div>
+  </div>
+  <div class="legend" id="legend"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA = __DATA__;
+const UI = __UI__;
+const SRC_SUF = __SRC_SUFFIXES__;      // afijos de la lengua vernácula
+const SRC_PRE = __SRC_PREFIXES__;
+const GL_SUF  = __GLOSS_SUFFIXES__;    // afijos de la lengua de glosa
+const GL_PRE  = __GLOSS_PREFIXES__;
+let dir="t2i", UNITS=[];
+const EDIT_OPT="__edit__";
+
+function T(key,vars){let s=UI[key]||key;for(const k in (vars||{}))s=s.split("{"+k+"}").join(vars[k]);return s;}
+
+function maxWords(map){let m=1;for(const k in map){const n=k.split(" ").length;if(n>m)m=n;}return m;}
+const MAXN={t2i:Math.min(6,maxWords(DATA.t2i)),i2t:Math.min(6,maxWords(DATA.i2t))};
+function buildAlt(map){const a={};for(const k in map){const s=k.replace(/['’]/g,"");if(!(s in map))a[s]=k;}return a;}
+const ALT={t2i:buildAlt(DATA.t2i),i2t:buildAlt(DATA.i2t)};
+
+// glosas propias del usuario (persistentes)
+let CUSTOM={};
+try{CUSTOM=JSON.parse(localStorage.getItem("il_custom")||"{}");}catch(e){CUSTOM={};}
+function ckey(k){return dir+""+k;}
+function saveCustom(){try{localStorage.setItem("il_custom",JSON.stringify(CUSTOM));}catch(e){}}
+
+function glossStems(w){const out=[w];
+  for(const s of GL_SUF){if(w.endsWith(s)&&w.length-s.length>=2)out.push(w.slice(0,-s.length));}
+  for(const p of GL_PRE){if(w.startsWith(p)&&w.length-p.length>=3)out.push(w.slice(p.length));}
+  return out;}
+function lookupExact(key){const m=DATA[dir],a=ALT[dir],k=key.toLowerCase();
+  if(m[k])return m[k];const b=k.replace(/['’]/g,"");if(a[b])return m[a[b]];return null;}
+// Raíces candidatas del vernáculo, de menos a más agresivo: primero quitando
+// solo sufijo (el orden histórico, que no conviene alterar), luego solo prefijo,
+// y por último ambos. Lenguas muy prefijantes como la yanesha marcan la persona
+// delante, así que sin el prefijo se pierde la mitad del sistema.
+function srcStems(lw){const out=[];
+  for(const s of SRC_SUF){if(lw.endsWith(s)&&lw.length-s.length>=3)out.push(lw.slice(0,-s.length));}
+  for(const p of SRC_PRE){if(lw.startsWith(p)&&lw.length-p.length>=3)out.push(lw.slice(p.length));}
+  for(const p of SRC_PRE){if(!lw.startsWith(p))continue;const t=lw.slice(p.length);
+    for(const s of SRC_SUF){if(t.endsWith(s)&&t.length-s.length>=3)out.push(t.slice(0,-s.length));}}
+  return out;}
+function lookupWord(w){let r=lookupExact(w);if(r)return r;const m=DATA[dir],a=ALT[dir];
+  if(dir==="i2t"){for(const st of glossStems(w.toLowerCase())){if(m[st])return m[st];if(a[st])return m[a[st]];}}
+  else{for(const st of srcStems(w.toLowerCase())){
+    if(m[st])return m[st];const sb=st.replace(/['’]/g,"");if(a[sb])return m[a[sb]];}}
+  return null;}
+
+function esc(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+// \p{M} incluye las marcas combinantes: ortografías como la yanesha escriben
+// t̃ m̃ p̃ c̈h con tilde/diéresis combinante, y sin esto "Ahuat̃" se parte en dos.
+function tokenize(t){return t.match(/[\p{L}\p{M}'’]+|[^\p{L}\p{M}\s]+|\s+/gu)||[];}
+function isWord(t){return /[\p{L}]/u.test(t)&&!/^\s+$/.test(t);}
+
+function makeWordUnit(raw,cands,found,manual){
+  const key=raw.toLowerCase();
+  const u={t:"word",raw,key,cands:(cands||[]).slice(0,6),sel:0,found,manual:!!manual,custom:null};
+  const c=CUSTOM[ckey(key)];
+  if(c){u.custom=c;}
+  return u;
+}
+
+function buildModel(){
+  const toks=tokenize(document.getElementById("in").value);
+  UNITS=[];
+  let i=0;
+  while(i<toks.length){
+    const t=toks[i];
+    if(/^\s+$/.test(t)){UNITS.push({t:"space",raw:t});i++;continue;}
+    if(!isWord(t)){UNITS.push({t:"punct",raw:t});i++;continue;}
+    const run=[i];let j=i+1;
+    while(j+1<toks.length && /^\s+$/.test(toks[j]) && isWord(toks[j+1])){run.push(j+1);j+=2;}
+    let L=Math.min(MAXN[dir],run.length),matched=null;
+    for(;L>=2;L--){const key=run.slice(0,L).map(x=>toks[x].toLowerCase()).join(" ");
+      const r=lookupExact(key);if(r){matched={L,r};break;}}
+    if(matched){
+      const raw=toks.slice(run[0],run[matched.L-1]+1).join("");
+      UNITS.push(makeWordUnit(raw,matched.r,true));
+      i=run[matched.L-1]+1;
+    }else{
+      const r=lookupWord(t);
+      UNITS.push(makeWordUnit(t,r||[],!!(r&&r.length)));
+      i++;
+    }
+  }
+}
+
+function effGloss(u){
+  if(u.custom) return u.custom;
+  if(u.found && u.cands.length) return u.cands[u.sel]||u.cands[0];
+  return "["+u.raw+"]";
+}
+
+function renderTokens(){
+  let html="",nW=0,nF=0;
+  UNITS.forEach((u,i)=>{
+    if(u.t==="space")return;
+    if(u.t==="punct"){html+=`<span class="punc">${esc(u.raw)}</span>`;return;}
+    nW++;
+    const phrase=/\s/.test(u.raw.trim())||u.manual;
+    const cls="tok"+(u.found||u.custom?"":" unk")+(phrase?" phrase":"")+(u.custom?" cust":"");
+    let gloss;
+    if(u.editing){
+      gloss=`<input class="gedit" data-i="${i}" value="${esc(effGloss(u)==='['+u.raw+']'?'':effGloss(u))}" placeholder="${esc(UI.ph_gloss)}">`;
+    }else if(u.custom){
+      gloss=`<span class="g">${esc(u.custom)}</span>`;
+    }else if(u.found && u.cands.length>1){
+      const opts=u.cands.map((c,j)=>`<option value="${j}"${j===u.sel?" selected":""}>${esc(c)}</option>`).join("")
+        +`<option value="${EDIT_OPT}">${esc(UI.opt_own)}</option>`;
+      gloss=`<select class="gsel" data-i="${i}">${opts}</select>`;
+    }else if(u.found){
+      gloss=`<span class="g">${esc(u.cands[0])}</span>`;
+    }else{
+      gloss=`<span class="g">?</span>`;
+    }
+    const hasNextWord = UNITS.slice(i+1).some(x=>x.t==="word");
+    let ctl=`<span class="ctl">`;
+    if(!u.editing) ctl+=`<button data-act="edit" data-i="${i}" title="${esc(UI.tip_edit)}">✎</button>`;
+    if(hasNextWord && !u.editing) ctl+=`<button data-act="join" data-i="${i}" title="${esc(UI.tip_join)}">⊕</button>`;
+    if(u.manual && !u.editing) ctl+=`<button data-act="split" data-i="${i}" title="${esc(UI.tip_split)}">⊝</button>`;
+    ctl+=`</span>`;
+    html+=`<span class="${cls}"><span class="s">${esc(u.raw)}</span>${gloss}${ctl}</span>`;
+    if(u.found||u.custom)nF++;
+  });
+  document.getElementById("il").innerHTML=html||`<span class="hint">${esc(UI.placeholder_out)}</span>`;
+  updateTranslation(nW,nF);
+}
+
+function updateTranslation(nW,nF){
+  let tr="";
+  UNITS.forEach(u=>{
+    if(u.t==="space"){tr+=" ";return;}
+    if(u.t==="punct"){tr=tr.replace(/\s$/,"")+u.raw;return;}
+    tr+=(tr&&!tr.endsWith(" ")?" ":"")+effGloss(u);
+  });
+  tr=tr.replace(/\s+/g," ").trim();
+  if(nW===undefined){nW=UNITS.filter(u=>u.t==="word").length;nF=UNITS.filter(u=>u.t==="word"&&(u.found||u.custom)).length;}
+  const trBox=document.getElementById("tr");
+  if(nW>0){trBox.style.display="block";document.getElementById("trtxt").textContent=tr;}else trBox.style.display="none";
+  document.getElementById("stat").textContent=nW?T("stat_found",{found:nF,total:nW,pct:Math.round(100*nF/nW)}):"";
+  window.__lastTR=tr;
+  window.__lastIL=UNITS.filter(u=>u.t==="word").map(u=>`${u.raw} = ${u.custom||(u.found?effGloss(u):"?")}`).join("\n");
+}
+
+function refresh(){buildModel();renderTokens();}
+
+const il=document.getElementById("il");
+il.addEventListener("change",e=>{
+  const sel=e.target.closest(".gsel");if(!sel)return;
+  const i=+sel.dataset.i;
+  if(sel.value===EDIT_OPT){UNITS[i].editing=true;renderTokens();focusEdit(i);return;}
+  UNITS[i].sel=+sel.value;updateTranslation();
+});
+il.addEventListener("click",e=>{
+  const b=e.target.closest("button[data-act]");if(!b)return;
+  const i=+b.dataset.i,act=b.dataset.act;
+  if(act==="edit"){UNITS[i].editing=true;renderTokens();focusEdit(i);}
+  else if(act==="join"){joinNext(i);}
+  else if(act==="split"){splitUnit(i);}
+});
+il.addEventListener("keydown",e=>{
+  if(!e.target.classList.contains("gedit"))return;
+  if(e.key==="Enter"){e.preventDefault();commitEdit(+e.target.dataset.i,e.target.value);}
+  else if(e.key==="Escape"){const i=+e.target.dataset.i;UNITS[i].editing=false;renderTokens();}
+});
+il.addEventListener("blur",e=>{
+  if(e.target.classList&&e.target.classList.contains("gedit"))commitEdit(+e.target.dataset.i,e.target.value);
+},true);
+
+function focusEdit(i){const inp=il.querySelector(`.gedit[data-i="${i}"]`);if(inp){inp.focus();inp.select();}}
+function commitEdit(i,val){
+  const u=UNITS[i];if(!u||u.t!=="word")return;
+  val=(val||"").trim();
+  u.editing=false;
+  if(val){u.custom=val;u.found=true;CUSTOM[ckey(u.key)]=val;saveCustom();}
+  else{u.custom=null;delete CUSTOM[ckey(u.key)];saveCustom();}
+  renderTokens();
+}
+function joinNext(i){
+  let j=i+1;while(j<UNITS.length&&UNITS[j].t!=="word"){j++;}
+  if(j>=UNITS.length)return;
+  const sepRaw=UNITS.slice(i+1,j).map(x=>x.raw).join("")||" ";
+  const raw=(UNITS[i].raw+sepRaw+UNITS[j].raw);
+  const key=raw.toLowerCase().replace(/\s+/g," ").trim();
+  const r=lookupExact(key);
+  const u=makeWordUnit(raw,r||[],!!(r&&r.length),true);
+  UNITS.splice(i,j-i+1,u);
+  renderTokens();
+}
+function splitUnit(i){
+  const raw=UNITS[i].raw;
+  const toks=tokenize(raw);
+  const repl=[];let k=0;
+  while(k<toks.length){const t=toks[k];
+    if(/^\s+$/.test(t)){repl.push({t:"space",raw:t});k++;continue;}
+    if(!isWord(t)){repl.push({t:"punct",raw:t});k++;continue;}
+    const r=lookupWord(t);repl.push(makeWordUnit(t,r||[],!!(r&&r.length)));k++;}
+  UNITS.splice(i,1,...repl);
+  renderTokens();
+}
+
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1400);}
+async function copy(txt,msg){if(!txt){toast(UI.no_text);return;}
+  try{await navigator.clipboard.writeText(txt);toast(msg);}
+  catch(e){const ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();
+    try{document.execCommand("copy");toast(msg);}catch(_){toast(UI.copy_fail);}document.body.removeChild(ta);}}
+
+document.getElementById("in").addEventListener("input",refresh);
+document.getElementById("seg").addEventListener("click",e=>{if(!e.target.dataset.d)return;dir=e.target.dataset.d;
+  [...document.querySelectorAll("#seg button")].forEach(b=>b.classList.toggle("active",b.dataset.d===dir));updatePH();refresh();});
+document.getElementById("swap").addEventListener("click",()=>{dir=dir==="t2i"?"i2t":"t2i";
+  [...document.querySelectorAll("#seg button")].forEach(b=>b.classList.toggle("active",b.dataset.d===dir));updatePH();refresh();});
+function updatePH(){document.getElementById("in").placeholder=dir==="t2i"?UI.ph_src:UI.ph_gl;}
+
+// etiquetas fijas
+document.getElementById("swap").textContent="⇄ "+UI.btn_swap;
+document.getElementById("copyT").textContent=UI.btn_copy_tr;
+document.getElementById("copyIL").textContent=UI.btn_copy_il;
+document.getElementById("clear").textContent=UI.btn_clear;
+document.getElementById("trlbl").textContent=UI.lbl_translation;
+document.getElementById("copyT2").textContent="📋 "+UI.btn_copy;
+document.getElementById("legend").innerHTML=UI.legend;
+
+document.getElementById("copyT").addEventListener("click",()=>copy(window.__lastTR,UI.toast_tr));
+document.getElementById("copyT2").addEventListener("click",()=>copy(window.__lastTR,UI.toast_tr));
+document.getElementById("copyIL").addEventListener("click",()=>copy(window.__lastIL,UI.toast_il));
+document.getElementById("clear").addEventListener("click",()=>{document.getElementById("in").value="";refresh();document.getElementById("in").focus();});
+updatePH();refresh();
+</script>
+</body>
+</html>

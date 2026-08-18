@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="__GLOSS_ISO__">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<style>
+  :root{--bg:#f6f7f9;--card:#fff;--ink:#1c2530;--muted:#63707e;--line:#e3e8ee;
+    --accent:#1f4e79;--A:#2f7d3b;--Abg:#e6f4ea;--B:#b3651b;--Bbg:#fbead9;--C:#2563a8;--Cbg:#e1ecf7;--shadow:0 1px 3px rgba(0,0,0,.06);}
+  @media (prefers-color-scheme:dark){:root{--bg:#0f141a;--card:#171e26;--ink:#e6ebf1;--muted:#93a1b0;--line:#25303b;
+    --accent:#6aa9e0;--A:#6cc47a;--Abg:#16281a;--B:#e0a262;--Bbg:#2a1d10;--C:#6aa9e0;--Cbg:#132234;--shadow:0 1px 3px rgba(0,0,0,.4);}}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+  h1{font-size:19px;margin:14px 0 2px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 10px}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-bottom:8px}
+  #q{flex:1;min-width:220px;padding:10px 12px;font-size:15px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+  .filters{display:flex;gap:6px;flex-wrap:wrap;padding-bottom:10px}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap}
+  .tab{padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--ink);font-size:13px;cursor:pointer;user-select:none}
+  .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .chip{padding:6px 10px;border:1px solid var(--line);border-radius:999px;font-size:12px;cursor:pointer;background:var(--bg);color:var(--muted);user-select:none}
+  .chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .chip.on[data-lv=A]{background:var(--Abg);color:var(--A);border-color:var(--A)}
+  .chip.on[data-lv=B]{background:var(--Bbg);color:var(--B);border-color:var(--B)}
+  .chip.on[data-lv=C]{background:var(--Cbg);color:var(--C);border-color:var(--C)}
+  main{max-width:1000px;margin:0 auto;padding:14px 16px 60px}
+  .stat{color:var(--muted);font-size:12.5px;margin:2px 0 12px}
+  .entry{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:8px;box-shadow:var(--shadow)}
+  .head{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .tw{font-weight:700;font-size:16px}
+  .badge{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:6px;letter-spacing:.4px}
+  .badge.A{background:var(--Abg);color:var(--A)} .badge.B{background:var(--Bbg);color:var(--B)}
+  .badge.C{background:var(--Cbg);color:var(--C)}
+  .kind{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+  .gloss{margin-top:2px;font-size:15px}
+  .meta{color:var(--muted);font-size:12px;margin-top:4px}
+  .defn{color:var(--muted);font-size:13.5px;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)}
+  mark{background:#ffe58a;color:#000;border-radius:3px;padding:0 1px}
+  @media (prefers-color-scheme:dark){mark{background:#7a6320;color:#fff}}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+  td:first-child{font-weight:700;white-space:nowrap}
+  .empty{color:var(--muted);text-align:center;padding:40px 0}
+  .note{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--muted);margin-bottom:14px}
+  .xlink{display:inline-block;margin:0 0 10px;padding:6px 12px;border:1px solid var(--accent);border-radius:999px;
+    color:var(--accent);text-decoration:none;font-size:13px;font-weight:600}
+  .xlink:hover{background:var(--accent);color:#fff}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>__TITLE__</h1>
+  <p class="sub">__SUBTITLE__</p>
+  <a class="xlink" href="__INTER_FILE__">__LINK_INTER__</a>
+  <div class="controls">
+    <input id="q" placeholder="__SEARCH__" autofocus>
+  </div>
+  <div class="filters" id="lvf">
+    <span class="chip on" data-lv="A">__CHIP_A__</span>
+    <span class="chip on" data-lv="B">__CHIP_B__</span>
+    <span class="chip on" data-lv="C">__CHIP_C__</span>
+    <span style="width:10px"></span>
+    <span class="chip on" data-k="palabra">__KIND_W__</span>
+    <span class="chip on" data-k="frase">__KIND_P__</span>
+    <span class="chip on" data-k="raiz">__KIND_R__</span>
+  </div>
+  <div class="tabs" id="tabs">
+    <span class="tab active" data-s="main">__TAB_MAIN__</span>
+    <span class="tab" data-s="glos">__TAB_GLOS__</span>
+    <span class="tab" data-s="prop">__TAB_PROP__</span>
+    <span class="tab" data-s="morf">__TAB_MORF__</span>
+  </div>
+  <div style="height:12px"></div>
+</div></header>
+<main>
+  <div id="stat" class="stat"></div>
+  <div id="list"></div>
+</main>
+<script>
+const DATA = __DATA__;
+const UI = __UI__;
+const KIND = UI.kinds, TYPE = UI.types;
+let section="main";
+let levels={A:true,B:true,C:true};
+let kinds={palabra:true,frase:true,raiz:true};
+const q=document.getElementById("q"),list=document.getElementById("list"),stat=document.getElementById("stat");
+function T(key,vars){let s=UI[key]||key;for(const k in (vars||{}))s=s.split("{"+k+"}").join(vars[k]);return s;}
+function norm(s){return (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/['’-]/g,"");}
+function esc(s){return (s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+function hi(s,term){s=esc(s);if(!term)return s;try{const re=new RegExp("("+term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig");return s.replace(re,"<mark>$1</mark>");}catch(e){return s;}}
+function render(){
+  const raw=q.value.trim(),term=norm(raw);let html="",shown=0,total=0;
+  if(section==="main"){
+    let rows=DATA.main.filter(r=>levels[r.lv]&&kinds[r.k]);total=rows.length;
+    rows=rows.filter(r=>!term||norm(r.t).includes(term)||norm(r.i).includes(term));shown=rows.length;
+    html=rows.map(r=>`<div class="entry"><div class="head"><span class="tw">${hi(r.t,raw)}</span>
+      <span class="badge ${r.lv}">${r.lv}${r.cf?"·"+r.cf:""}</span>${r.k!=="palabra"?`<span class="kind">${KIND[r.k]}</span>`:""}</div>
+      <div class="gloss">${hi(r.i,raw)||"—"}</div>${r.m?`<div class="meta">${esc(r.m)}</div>`:""}</div>`).join("");
+    stat.innerHTML=T("stat_main",{shown:shown,total:total,all:DATA.counts.main,A:DATA.counts.A,B:DATA.counts.B});
+  }else if(section==="glos"){
+    let rows=DATA.glos;total=rows.length;
+    rows=rows.filter(r=>!term||norm(r.t).includes(term)||norm(r.i).includes(term)||norm(r.d).includes(term));shown=rows.length;
+    html=rows.map(r=>`<div class="entry"><div class="head"><span class="tw">${hi(r.t,raw)}</span><span class="badge A">A</span></div>
+      <div class="gloss"><em>${hi(r.i,raw)||"—"}</em></div>${r.d?`<div class="defn">${hi(r.d,raw)}</div>`:""}</div>`).join("");
+    stat.innerHTML=T("stat_glos",{shown:shown,total:total});
+  }else if(section==="prop"){
+    let rows=DATA.prop;total=rows.length;
+    rows=rows.filter(r=>!term||norm(r.t).includes(term)||norm(r.id).includes(term));shown=rows.length;
+    html=`<div class="entry"><table><thead><tr><th>${UI.col_source}</th><th>${UI.col_type}</th><th>${UI.col_gloss}</th></tr></thead><tbody>`+
+      rows.map(r=>`<tr><td>${hi(r.t,raw)}</td><td style="color:var(--muted)">${TYPE[r.ty]||r.ty}</td><td>${hi(r.id||r.t,raw)}</td></tr>`).join("")+`</tbody></table></div>`;
+    stat.innerHTML=T("stat_prop",{shown:shown,total:total});
+  }else{
+    let mr=DATA.morf.filter(m=>!term||norm(m.join(" ")).includes(term));shown=mr.length;
+    html=(DATA.morf.length?`<div class="note">${UI.morf_note}</div>`:"")+
+      `<div class="entry"><table><thead><tr><th>${UI.col_affix}</th><th>${UI.col_function}</th><th>${UI.col_example}</th></tr></thead><tbody>`+
+      mr.map(m=>`<tr><td>${hi(m[0],raw)}</td><td>${hi(m[1]||"",raw)}</td><td style="color:var(--muted)">${hi(m[2]||"",raw)}</td></tr>`).join("")+`</tbody></table></div>`;
+    stat.innerHTML=T("stat_morf",{shown:shown});
+  }
+  list.innerHTML=html||`<div class="empty">${T("no_results",{q:esc(raw)})}</div>`;
+}
+q.addEventListener("input",render);
+document.getElementById("tabs").addEventListener("click",e=>{
+  if(!e.target.dataset.s)return;section=e.target.dataset.s;
+  [...document.querySelectorAll(".tab")].forEach(t=>t.classList.toggle("active",t.dataset.s===section));
+  document.getElementById("lvf").style.display=(section==="main")?"flex":"none";render();
+});
+document.getElementById("lvf").addEventListener("click",e=>{
+  const lv=e.target.dataset.lv,k=e.target.dataset.k;
+  if(lv){levels[lv]=!levels[lv];e.target.classList.toggle("on",levels[lv]);}
+  else if(k){kinds[k]=!kinds[k];e.target.classList.toggle("on",kinds[k]);}
+  else return;
+  render();
+});
+render();
+</script>
+</body>
+</html>

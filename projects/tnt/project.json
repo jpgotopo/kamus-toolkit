@@ -1,0 +1,59 @@
+{
+  "id": "tnt",
+
+  "translation_dir": "C:\\Users\\Jean Paul\\Documents\\BahasaTemboan",
+  "backtranslation_dir": "C:\\Users\\Jean Paul\\Documents\\BahasaTemboan\\TBTnt",
+
+  "language": {
+    "name": "Tontémboan",
+    "alt": "Temboan",
+    "iso": "tnt",
+    "region": "bahasa Minahasa, Sulawesi Utara"
+  },
+
+  "gloss_language": {
+    "name": "Bahasa Indonesia",
+    "iso": "id",
+    "map": "gloss_id"
+  },
+
+  "sources": {
+    "lexicon": "Lexicon.xml",
+    "renderings": "TermRenderings.xml",
+    "glossary": "A9GLOTemboan.SFM"
+  },
+
+  "interlinear": {
+    "source_suffixes": ["nao", "na", "ku", "mu", "no", "o", "an", "en"]
+  },
+
+  "_ui_nota": [
+    "Textos propios de Tontémboan que sobreescriben los genéricos de kamus/locales.py.",
+    "Van aquí y no en locales.py porque los ejemplos son frases tontémboan:",
+    "otra lengua con glosa indonesia NO debe heredarlos."
+  ],
+  "ui": {
+    "card_kamus_title": "Kamus",
+    "card_kamus_desc": "{n_main} lema utama, {n_glos} istilah glosarium, {n_prop} nama diri. Dengan pencarian dan penyaring tingkat keyakinan A / B / C.",
+    "card_inter_desc": "Tempel teks dan lihat glosa kata-demi-kata plus terjemahan perkiraan. Dua arah, bekerja offline.",
+    "go_kamus": "Buka kamus →",
+    "go_inter": "Buka interlinear →",
+    "landing_foot": "Alat bantu kerja, bukan kamus normatif. Selalu periksa dengan penutur asli.",
+    "js_il": {
+      "ph_src": "Ketik teks Tontémboan… (mis. Si Yesus kinamang i Casuruan)",
+      "ph_gl": "Ketik teks Indonesia… (mis. Tuhan menunjukkan belas kasihan)",
+      "legend": "Frasa yang dikenal (mis. <i>belas kasihan</i>) otomatis digabung — kotak bergaris biru.<br><b>⊕</b> gabung kata ini dengan kata berikut · <b>⊝</b> pisahkan lagi · <b>✎</b> tulis / ubah arti sendiri (disimpan otomatis).<br>Garis titik-titik = ada beberapa arti; klik untuk memilih. Kotak merah = tidak ditemukan."
+    }
+  },
+
+  "output": {
+    "basename": "Kamus-Tontemboan-Indonesia",
+    "interlinear": "Interlinear-Tontemboan-Indonesia"
+  },
+
+  "publish": {
+    "dir": "C:\\Users\\Jean Paul\\Documents\\kamus-tontemboan-web",
+    "repo": "jpgotopo/kamus-tontemboan",
+    "public": true
+  }
+}
