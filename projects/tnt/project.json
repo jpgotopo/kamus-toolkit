@@ -1,8 +1,8 @@
 {
   "id": "tnt",
 
-  "translation_dir": "C:\\Users\\Jean Paul\\Documents\\BahasaTemboan",
-  "backtranslation_dir": "C:\\Users\\Jean Paul\\Documents\\BahasaTemboan\\TBTnt",
+  "translation_dir": "BahasaTemboan",
+  "backtranslation_dir": "BahasaTemboan/TBTnt",
 
   "language": {
     "name": "Tontémboan",
@@ -52,7 +52,6 @@
   },
 
   "publish": {
-    "dir": "C:\\Users\\Jean Paul\\Documents\\kamus-tontemboan-web",
     "repo": "jpgotopo/kamus-tontemboan",
     "public": true
   }

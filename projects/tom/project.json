@@ -1,8 +1,8 @@
 {
   "id": "tom",
 
-  "translation_dir": "C:\\Users\\Jean Paul\\Documents\\TombuluAssets",
-  "backtranslation_dir": "C:\\Users\\Jean Paul\\Documents\\TombuluAssets\\TBL",
+  "translation_dir": "TombuluAssets",
+  "backtranslation_dir": "TombuluAssets/TBL",
 
   "language": {
     "name": "Tombulu",
@@ -42,7 +42,6 @@
   },
 
   "publish": {
-    "dir": "C:\\Users\\Jean Paul\\Documents\\kamus-tombulu-web",
     "repo": "jpgotopo/kamus-tombulu",
     "public": true
   }

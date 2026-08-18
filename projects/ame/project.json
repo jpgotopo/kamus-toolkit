@@ -1,8 +1,8 @@
 {
   "id": "ame",
 
-  "translation_dir": "C:\\Users\\Jean Paul\\Documents\\Yanesha",
-  "backtranslation_dir": "C:\\Users\\Jean Paul\\Documents\\Yanesha\\YaneshaR",
+  "translation_dir": "Yanesha",
+  "backtranslation_dir": "Yanesha/YaneshaR",
 
   "language": {
     "name": "Yanesha'",
@@ -48,7 +48,6 @@
   },
 
   "publish": {
-    "dir": "C:\\Users\\Jean Paul\\Documents\\kamus-yanesha-web",
     "repo": "jpgotopo/kamus-yanesha",
     "public": true
   }

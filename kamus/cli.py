@@ -16,7 +16,7 @@ from .locales import Strings
 
 
 def cmd_detect(args):
-    dirs = args.dirs or [os.path.join(os.path.expanduser("~"), "Documents")]
+    dirs = args.dirs or [config.PARATEXT_ROOT]
     found = config.find_projects(dirs)
     if not found:
         print("No se encontró ningún proyecto Paratext en:", ", ".join(dirs))

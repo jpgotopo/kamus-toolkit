@@ -13,6 +13,29 @@ PROJECTS = os.path.join(TOOLKIT, "projects")
 TEMPLATES = os.path.join(TOOLKIT, "templates")
 GLOSSES = os.path.join(TOOLKIT, "glosses")
 
+# Raíces de máquina. Los project.json guardan nombres de carpeta, no rutas
+# absolutas: así el mismo config sirve en cualquier ordenador y el repo no lleva
+# dentro el layout del disco de nadie. Se mueven con estas variables de entorno:
+#   KAMUS_PARATEXT_ROOT  dónde viven los proyectos Paratext (lo que lee `detect`)
+#   KAMUS_WEB_ROOT       dónde viven los repos web de cada idioma
+DOCUMENTS = os.path.join(os.path.expanduser("~"), "Documents")
+PARATEXT_ROOT = os.environ.get("KAMUS_PARATEXT_ROOT") or DOCUMENTS
+WEB_ROOT = os.environ.get("KAMUS_WEB_ROOT") or os.path.dirname(TOOLKIT)
+
+
+def resolve_dir(value, root):
+    """Resuelve una entrada de project.json contra su raíz.
+
+    Una ruta absoluta se respeta tal cual: los configs viejos siguen valiendo y
+    queda la puerta de escape para un proyecto que viva fuera de la raíz.
+    """
+    if not value:
+        return value
+    value = value.replace("\\", os.sep).replace("/", os.sep)
+    if os.path.isabs(value):
+        return value
+    return os.path.normpath(os.path.join(root, value))
+
 
 # --------------------------------------------------------------------------
 # Lectura de Settings.xml
@@ -104,6 +127,16 @@ DEFAULT_TIER_THRESHOLDS = {
 }
 
 
+def _no_paratext(declarado, resuelto):
+    """El error más frecuente al estrenar el toolkit en otra máquina."""
+    msg = f"No es un proyecto Paratext: {resuelto}"
+    if not os.path.isabs(declarado.replace("\\", os.sep).replace("/", os.sep)):
+        msg += (f"\n  '{declarado}' se buscó dentro de {PARATEXT_ROOT}."
+                f"\n  Si tus proyectos Paratext están en otro sitio, apunta ahí"
+                f" KAMUS_PARATEXT_ROOT.")
+    return msg
+
+
 class Project:
     """Un proyecto del toolkit: traducción + retrotraducción + curaciones."""
 
@@ -114,14 +147,15 @@ class Project:
         self.work = os.path.join(root, "work")  # intermedios (bitext, align…)
         os.makedirs(self.work, exist_ok=True)
 
-        self.tr = read_settings(cfg["translation_dir"])
+        tr_dir = resolve_dir(cfg["translation_dir"], PARATEXT_ROOT)
+        self.tr = read_settings(tr_dir)
         if not self.tr:
-            raise SystemExit(f"No es un proyecto Paratext: {cfg['translation_dir']}")
+            raise SystemExit(_no_paratext(cfg["translation_dir"], tr_dir))
 
-        bt_dir = cfg.get("backtranslation_dir")
+        bt_dir = resolve_dir(cfg.get("backtranslation_dir"), PARATEXT_ROOT)
         self.bt = read_settings(bt_dir) if bt_dir else None
         if bt_dir and not self.bt:
-            raise SystemExit(f"No es un proyecto Paratext: {bt_dir}")
+            raise SystemExit(_no_paratext(cfg["backtranslation_dir"], bt_dir))
 
         lang = cfg.get("language", {})
         self.lang_name = lang.get("name") or self.tr["full_name"] or self.tr["name"]
@@ -143,7 +177,15 @@ class Project:
         self.inter_basename = out.get("interlinear") or f"Interlinear-{self._slug()}"
         os.makedirs(self.out_dir, exist_ok=True)
 
-        self.publish = cfg.get("publish", {})
+        # El repo web: si no se declara carpeta, se deriva del slug de GitHub
+        # ("usuario/kamus-tombulu" -> <WEB_ROOT>/kamus-tombulu-web), que es la
+        # convención que ya siguen todos los idiomas.
+        self.publish = dict(cfg.get("publish", {}))
+        pdir, slug = self.publish.get("dir"), self.publish.get("repo")
+        if not pdir and slug:
+            pdir = slug.split("/")[-1] + "-web"
+        if pdir:
+            self.publish["dir"] = resolve_dir(pdir, WEB_ROOT)
 
     def _slug(self):
         import unicodedata

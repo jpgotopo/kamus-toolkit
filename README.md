@@ -19,9 +19,23 @@ python -m kamus publish <proyecto>      # copia al repo, lo hace PWA, commit, pu
 python -m kamus all     <proyecto>      # align + build + publish
 ```
 
+## Dónde busca las cosas
+
+`project.json` guarda **nombres de carpeta**, no rutas absolutas, para que el mismo config
+sirva en cualquier ordenador. Se resuelven contra dos raíces:
+
+| Variable | Por defecto | Qué contiene |
+|---|---|---|
+| `KAMUS_PARATEXT_ROOT` | `~/Documents` | los proyectos Paratext (es donde mira `detect`) |
+| `KAMUS_WEB_ROOT` | la carpeta que contiene el toolkit | los repos web de cada idioma |
+
+Así `"translation_dir": "TombuluAssets"` es `~/Documents/TombuluAssets`, y el repo web sale
+de `publish.repo` (`usuario/kamus-tombulu` → `kamus-tombulu-web`) sin declarar carpeta alguna.
+Si un proyecto vive fuera de esas raíces, una **ruta absoluta se sigue respetando** tal cual.
+
 ## Añadir un idioma
 
-1. `python -m kamus detect` → anota las rutas de la traducción y la retrotraducción.
+1. `python -m kamus detect` → anota los nombres de carpeta de la traducción y la retrotraducción.
 2. `cp -r projects/_ejemplo projects/<iso>` y edita `project.json`.
 3. `python -m kamus check <iso>` → te dice qué niveles saldrán y qué falta.
 4. `python -m kamus build <iso>`.

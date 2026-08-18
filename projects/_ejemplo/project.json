@@ -7,8 +7,13 @@
 
   "id": "xxx",
 
-  "translation_dir": "C:\\ruta\\al\\proyecto\\Paratext",
-  "backtranslation_dir": "C:\\ruta\\al\\proyecto\\Paratext\\RetroTrad",
+  "_rutas": [
+    "Nombre de la carpeta Paratext, no la ruta entera: se busca dentro de la raíz",
+    "de proyectos (por defecto ~/Documents, o KAMUS_PARATEXT_ROOT si la defines).",
+    "Una ruta absoluta también vale, para un proyecto que viva fuera de esa raíz."
+  ],
+  "translation_dir": "MiProyecto",
+  "backtranslation_dir": "MiProyecto/RetroTrad",
 
   "language": {
     "name": "Nombre de la lengua",
@@ -43,7 +48,7 @@
   },
 
   "publish": {
-    "dir": "C:\\ruta\\al\\repo-web-de-esta-lengua",
+    "_nota": "Sin 'dir', el repo web se deriva de 'repo': <KAMUS_WEB_ROOT>/kamus-xxx-web, donde la raíz por defecto es la carpeta que contiene el toolkit.",
     "repo": "usuario/kamus-xxx",
     "public": true
   }

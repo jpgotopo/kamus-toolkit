@@ -1,8 +1,8 @@
 {
   "id": "tnw",
 
-  "translation_dir": "C:\\Users\\Jean Paul\\Documents\\Tonsawan",
-  "backtranslation_dir": "C:\\Users\\Jean Paul\\Documents\\Tonsawan\\TBTswg",
+  "translation_dir": "Tonsawan",
+  "backtranslation_dir": "Tonsawan/TBTswg",
 
   "language": {
     "name": "Tonsawang",
@@ -44,7 +44,6 @@
   },
 
   "publish": {
-    "dir": "C:\\Users\\Jean Paul\\Documents\\kamus-tonsawang-web",
     "repo": "jpgotopo/kamus-tonsawang",
     "public": true
   }
