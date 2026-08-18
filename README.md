@@ -88,3 +88,13 @@ templates/        plantillas HTML del kamus y del interlineal
 
 El `git` del PATH es 2.9.2 (2016) y su transporte HTTPS está roto contra GitHub (muere con
 exit 128 sin mensaje). `publish.py` lo esquiva usando el git moderno que trae GitHub Desktop.
+
+## Licencia
+
+El **código** es MIT: ver [LICENSE](LICENSE).
+
+Los **datos lingüísticos** no. Las glosas, los mapas de nombres propios, la morfología y las
+hojas de FLEx salen del trabajo de los equipos de traducción y de sus proyectos Paratext; el
+dueño de la lengua es el equipo, no este pipeline. Si vas a reutilizar los datos de un idioma
+concreto, pídeselo al equipo que lo tradujo. La licencia MIT cubre las herramientas, no el
+material de las lenguas.
